@@ -27,13 +27,13 @@ See http://serverfault.com/questions/72744/command-to-prepend-string-to-each-lin
 The `Makefile` uses `shcomp` from `ksh` to speed this script up.  But it runs in any bourne shell type.
 If you want to see how slow `bash` is compared to this, then run it directly.
 
-Results:
+Results (Linux, Debian 7.x):
 
 - If you do not have a special purpose statically linked binary for the task, stick with something like
   `awk -v T="[TEST]" '{ print v " " $0 }'`
   It is easy to understand, easy to use, flexible and performs very well.
 
-- If you happen to compile your ksh script anyway, then prhaps do it directly in your `ksh`.
+- If you happen to compile your ksh script anyway, then perhaps do it directly in your `ksh`.
   It still is a factor slower than `awk`, but is less `fork` intensive, which is interesting.
   But if you do not compile your script - which is the normal case - stick with `awk`!
 
