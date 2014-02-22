@@ -149,8 +149,8 @@ timing 2 "$@"
 INPUT=/tmp/timing.input.tmp.$$
 trap 'rm -f "$INPUT"' 0
 
-check 1000 100
-check 100 1000
-check 10 10000
-check 1 100000
+check 10000 100
+check 1000 1000
+check 100 10000
+check 10 100000
 
