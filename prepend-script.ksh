@@ -88,20 +88,20 @@ while 1:
 # See https://github.com/hilbix/unbuffered/
 bin1()
 {
-./unbuffered.dynamic -cp'[TEST] ' -q''
+./unbuffered.dynamic -cp'[TEST] ' -q ''
 }
 
 # Example for a static binary
 bin2()
 {
-./unbuffered.static -cp'[TEST] ' -q''
+./unbuffered.static -cp'[TEST] ' -q ''
 }
 
 loop()
 {
 for a in `seq "$1"`
 do
-	"$2" < "$INPUT"
+	"$2" < "$INPUT" || echo "fail $? $1:$3 $2" >&2
 done >/dev/null
 }
 
@@ -111,7 +111,7 @@ run()
 for r in bin1 bin2 perl1 python1 python2 awk1 awk2a awk2b awk2c awk3a awk3b awk3c sed1 sh0 sh1 sh2 sh3
 do
 	echo "run $r"
-	time loop "$1" "$r"
+	time loop "$1" "$r" "$2"
 done 2>&1
 }
 
@@ -137,7 +137,7 @@ cat "$INPUT" >/dev/null
 cat "$INPUT" >/dev/null
 #run 1 >/dev/null
 echo
-run "$2" | awk -v L="$2*$1" '$1=="run" { script=$2 } $1=="user" { print $2 " " L " " script }'
+run "$2" "$1" | awk -v L="$2*$1" '$1=="run" { script=$2 } $1=="user" { print $2 " " L " " script } $1=="fail" { print }'
 }
 
 check()
