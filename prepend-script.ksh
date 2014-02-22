@@ -137,7 +137,7 @@ cat "$INPUT" >/dev/null
 cat "$INPUT" >/dev/null
 #run 1 >/dev/null
 echo
-run "$2" "$1" | awk -v L="$2*$1" '$1=="run" { script=$2 } $1=="user" { print $2 " " L " " script } $1=="fail" { print }'
+run "$2" "$1" | awk -v L="$2*$1" 'function put(a,b) { for (a in x) { b="\n"; printf("%s=%s ", a, x[a]) } delete x; if (b) printf b; } $0=="" { next } $1=="run" { put(); } { a=$1; $1=""; gsub(/^[[:space:]]/,""); x[a]=$0; } END { put() }'
 }
 
 check()
