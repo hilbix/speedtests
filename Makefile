@@ -1,7 +1,9 @@
 # This Works is placed under the terms of the Copyright Less License,
 # see file COPYRIGHT.CLL.  USE AT OWN RISK, ABSOLUTELY NO WARRANTY.
 
-all:	tests
+.PHONY: all clean distclean tests
+all:	depends
+	@echo "to test run: make tests"
 
 .SUFFIXES: .kshcompiledtmp .ksh
 clean:
@@ -11,9 +13,12 @@ clean:
 distclean: clean
 	rm -f unbuffered.*
 
+.PHONY: depends
+depends:	prepend-script.kshcompiledtmp unbuffered.static unbuffered.dynamic
+
 tests:	prepend-script-test
 
-prepend-script-test:	prepend-script.kshcompiledtmp unbuffered.static unbuffered.dynamic
+prepend-script-test:	depends
 	ksh prepend-script.kshcompiledtmp
 
 unbuffered.static:	unbuffered/tino/Makefile unbuffered/unbuffered.c
