@@ -35,5 +35,5 @@ unbuffered/tino/Makefile:
 	git submodule update --init --recursive
 
 .ksh.kshcompiledtmp:
-	shcomp "$<" "$@"
+	if	which shcomp >/dev/null; then	shcomp "$<" "$@"; else	echo 'echo; echo "MISSING: please install ksh for: shcomp"; echo; false' >'$@'; fi
 
